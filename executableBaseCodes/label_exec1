@@ -1,0 +1,104 @@
+using System;
+using bpac;
+
+namespace LabelPrinter
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            if (args.Length < 4)
+            {
+                Console.WriteLine("Usage: LabelPrinter.exe <PartsNum> <DrawingNum> <PrintQuantity> <Type>");
+                return;
+            }
+
+            string partsNum = args[0];
+            string drawingNum = args[1];
+            int printQuantity = 1;
+            int type = 0;
+
+            if (!int.TryParse(args[2], out printQuantity) || printQuantity < 1)
+            {
+                Console.WriteLine("Invalid print quantity. Using 1.");
+                printQuantity = 1;
+            }
+
+            if (!int.TryParse(args[3], out type))
+            {
+                Console.WriteLine("Invalid Type. Defaulting to 0.");
+                type = 0;
+            }
+
+            string templatePath = GetTemplatePath(type);
+
+            if (string.IsNullOrEmpty(templatePath))
+            {
+                Console.WriteLine("Invalid template path for Type = " + type);
+                return;
+            }
+
+            Document doc = new Document();
+
+            if (type == 4)
+            {
+                for (int i = 1; i <= printQuantity; i++)
+                {
+                    if (doc.Open(templatePath))
+                    {
+                        doc.GetObject("PartsNum").Text = partsNum;
+                        doc.GetObject("DrawingNum").Text = $"{drawingNum} -{i}";
+
+                        doc.StartPrint("", PrintOptionConstants.bpoDefault);
+                        doc.PrintOut(1, PrintOptionConstants.bpoDefault);
+                        doc.EndPrint();
+                        doc.Close();
+
+                        Console.WriteLine($"Printed label {i}/{printQuantity} with Drawing Number: {drawingNum} -{i}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Failed to open template for Type = 4");
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                if (doc.Open(templatePath))
+                {
+                    doc.GetObject("PartsNum").Text = partsNum;
+                    doc.GetObject("DrawingNum").Text = drawingNum;
+
+                    doc.StartPrint("", PrintOptionConstants.bpoDefault);
+                    doc.PrintOut(printQuantity, PrintOptionConstants.bpoDefault);
+                    doc.EndPrint();
+                    doc.Close();
+
+                    Console.WriteLine($"Printed {printQuantity} labels for Type = {type}");
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to open template for Type = {type}");
+                }
+            }
+        }
+
+        static string GetTemplatePath(int type)
+        {
+            switch (type)
+            {
+                case 0:
+                    return @"C:\Users\arnav\Downloads\C-500600100SN-A769.lbx";
+                case 2:
+                    return @"C:\Users\arnav\Downloads\CustomLabel2.lbx";
+                case 3:
+                    return @"C:\Users\arnav\Downloads\CustomLabel3.lbx";
+                case 4:
+                    return @"C:\Users\arnav\Downloads\CustomLabel4.lbx";
+                default:
+                    return null;
+            }
+        }
+    }
+}

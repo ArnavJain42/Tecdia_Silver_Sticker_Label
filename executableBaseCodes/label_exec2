@@ -1,0 +1,49 @@
+using System;
+using bpac;
+
+namespace LabelPrinter2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            if (args.Length < 4)
+            {
+                Console.WriteLine("Usage: LabelPrinter2.exe <PartsNum> <DrawingNum> <PrintQuantity> <CustomerItem>");
+                return;
+            }
+
+            string partsNum = args[0];
+            string drawingNum = args[1];
+            int printQuantity = 1;
+            string customerItem = args[3];
+
+            if (!int.TryParse(args[2], out printQuantity) || printQuantity < 1)
+            {
+                Console.WriteLine("Invalid print quantity. Using 1.");
+                printQuantity = 1;
+            }
+
+            string templatePath = @"C:\Users\arnav\Downloads\C-Label2Template.lbx"; // Change this path to your second template file
+            Document doc = new Document();
+
+            if (doc.Open(templatePath))
+            {
+                doc.GetObject("PartsNum").Text = partsNum;
+                doc.GetObject("DrawingNum").Text = drawingNum;
+                doc.GetObject("CustomerItem").Text = customerItem;
+
+                doc.StartPrint("", PrintOptionConstants.bpoDefault);
+                doc.PrintOut(printQuantity, PrintOptionConstants.bpoDefault);
+                doc.EndPrint();
+                doc.Close();
+
+                Console.WriteLine($"Printed {printQuantity} labels (Label2)");
+            }
+            else
+            {
+                Console.WriteLine("Failed to open label template (Label2).");
+            }
+        }
+    }
+}

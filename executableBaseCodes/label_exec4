@@ -1,0 +1,59 @@
+using System;
+using bpac;
+
+namespace LabelPrinter4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            if (args.Length < 3)
+            {
+                Console.WriteLine("Usage: LabelPrinter4.exe <ProductName> <ModelNumber> <PrintQuantity>");
+                return;
+            }
+
+            string productName = args[0];
+            string modelNumber = args[1];
+            int printQuantity = 1;
+
+            if (!int.TryParse(args[2], out printQuantity) || printQuantity < 1)
+            {
+                Console.WriteLine("Invalid print quantity. Using 1.");
+                printQuantity = 1;
+            }
+
+            // Path to the .lbx label template for API 4
+            string templatePath = @"C:\Users\arnav\Downloads\Product-Model-Label.lbx";
+            Document doc = new Document();
+
+            if (doc.Open(templatePath))
+            {
+                try
+                {
+                    // Set values in label template
+                    doc.GetObject("ProductName").Text = productName;
+                    doc.GetObject("ModelNumber").Text = modelNumber;
+
+                    // Begin printing
+                    doc.StartPrint("Label4", PrintOptionConstants.bpoDefault);
+                    doc.PrintOut(printQuantity, PrintOptionConstants.bpoDefault);
+                    doc.EndPrint();
+                    Console.WriteLine($"Printed {printQuantity} label(s) successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error during label printing: " + ex.Message);
+                }
+                finally
+                {
+                    doc.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Failed to open label template.");
+            }
+        }
+    }
+}

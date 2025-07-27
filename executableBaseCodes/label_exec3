@@ -1,0 +1,59 @@
+using System;
+using bpac;
+
+namespace LabelPrinter3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            if (args.Length < 2)
+            {
+                Console.WriteLine("Usage: LabelPrinter3.exe <CustomerItem> <PrintQuantity>");
+                return;
+            }
+
+            string customerItem = args[0];
+            int printQuantity = 1;
+
+            if (!int.TryParse(args[1], out printQuantity) || printQuantity < 1)
+            {
+                Console.WriteLine("Invalid print quantity. Defaulting to 1.");
+                printQuantity = 1;
+            }
+
+            // Change this to the path of your actual .lbx label template for Label 3
+            string templatePath = @"C:\Users\arnav\Downloads\Label3Template.lbx";
+
+            Document doc = new Document();
+
+            if (doc.Open(templatePath))
+            {
+                try
+                {
+                    // Set text field values from args
+                    doc.GetObject("CustomerItem").Text = customerItem;
+
+                    // Start printing
+                    doc.StartPrint("", PrintOptionConstants.bpoDefault);
+                    doc.PrintOut(printQuantity, PrintOptionConstants.bpoDefault);
+                    doc.EndPrint();
+
+                    Console.WriteLine($"Successfully printed {printQuantity} labels with CustomerItem: {customerItem}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error during printing: " + ex.Message);
+                }
+                finally
+                {
+                    doc.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Failed to open the label template at: " + templatePath);
+            }
+        }
+    }
+}
