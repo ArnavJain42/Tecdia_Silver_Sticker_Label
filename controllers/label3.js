@@ -17,7 +17,7 @@ function handleLabel3(req, res) {
             return res.status(500).send("Print failed for API 3. execPath: " + exePath + " Params: " + CustomerItem + " " + PrintQuantity);
         }
 
-        res.send(`<html><body><h2>Label 3 printed</h2><script>setTimeout(() => window.close(), 5000);</script></body></html>`);
+        res.send(`<html><body><h2>API 3 printed</h2><script>setTimeout(() => window.close(), 5000);</script></body></html>`);
     });
 }
 

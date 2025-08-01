@@ -17,7 +17,7 @@ function handleLabel2(req, res) {
             return res.status(500).send("Print failed for API 2. execPath: " + exePath + " Params: " + PartsNumber + " " + DrawingNumber + " " + PrintQuantity + " " + CustomerItem);
         }
 
-        res.send(`<html><body><h2>Label 2 printed</h2><script>setTimeout(() => window.close(), 5000);</script></body></html>`);
+        res.send(`<html><body><h2>API 2 printed</h2><script>setTimeout(() => window.close(), 5000);</script></body></html>`);
     });
 }
 

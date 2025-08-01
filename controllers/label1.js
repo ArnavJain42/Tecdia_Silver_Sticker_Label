@@ -19,7 +19,7 @@ function handleLabel1(req, res) {
 
         res.send(`
             <html><body>
-            <h2>Print successful for Label 1</h2>
+            <h2>Print successful for API 1</h2>
             <script>setTimeout(() => window.close(), 5000);</script>
             </body></html>
         `);
