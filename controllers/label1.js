@@ -9,9 +9,9 @@ function handleLabel1(req, res) {
         return res.status(400).send("Missing required form parameters.");
     }
 
-    const exePath = path.join(__dirname, process.env.exec1);
+    const exePath = process.env.exec1;
 
-    execFile(exePath, [PartsNumber, DrawingNumber, PrintQuantity, Type], (err) => {
+    execFile(exePath, [decodeURIComponent(PartsNumber), decodeURIComponent(DrawingNumber), PrintQuantity, Type], (err) => {
         if (err) {
             console.error("Label 1 print error:", err);
             return res.status(500).send("Print failed API 1 execPath: " + exePath + "Params: " + PartsNumber +" " + DrawingNumber +" " + PrintQuantity +" " + Type);

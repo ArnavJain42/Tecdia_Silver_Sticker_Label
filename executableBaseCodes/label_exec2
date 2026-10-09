@@ -24,7 +24,7 @@ namespace LabelPrinter2
                 printQuantity = 1;
             }
 
-            string templatePath = @"C:\Users\arnav\Downloads\C-Label2Template.lbx"; // Change this path to your second template file
+            string templatePath = @"C:\Users\pws_qc\Desktop\Arnav_Repository\Tecdia_Silver_Sticker_Label\labels\label_1"; // Change this path to your second template file
             Document doc = new Document();
 
             if (doc.Open(templatePath))
@@ -35,6 +35,7 @@ namespace LabelPrinter2
 
                 doc.StartPrint("", PrintOptionConstants.bpoDefault);
                 doc.PrintOut(printQuantity, PrintOptionConstants.bpoDefault);
+                
                 doc.EndPrint();
                 doc.Close();
 

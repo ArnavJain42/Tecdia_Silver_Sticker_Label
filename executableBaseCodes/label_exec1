@@ -1,5 +1,5 @@
-using System;
 using bpac;
+
 
 namespace LabelPrinter
 {
@@ -89,13 +89,13 @@ namespace LabelPrinter
             switch (type)
             {
                 case 0:
-                    return @"C:\Users\arnav\Downloads\C-500600100SN-A769.lbx";
+                    return @"C:\Users\pws_qc\Desktop\Arnav_Repository\Tecdia_Silver_Sticker_Label\labels\label_0";
                 case 2:
-                    return @"C:\Users\arnav\Downloads\CustomLabel2.lbx";
+                    return @"C:\Users\pws_qc\Desktop\Arnav_Repository\Tecdia_Silver_Sticker_Label\labels\label_2";
                 case 3:
-                    return @"C:\Users\arnav\Downloads\CustomLabel3.lbx";
+                    return @"C:\Users\pws_qc\Desktop\Arnav_Repository\Tecdia_Silver_Sticker_Label\labels\label_3";
                 case 4:
-                    return @"C:\Users\arnav\Downloads\CustomLabel4.lbx";
+                    return @"C:\Users\pws_qc\Desktop\Arnav_Repository\Tecdia_Silver_Sticker_Label\labels\label_4";
                 default:
                     return null;
             }
